@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'data.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'profile_page.dart';
 
