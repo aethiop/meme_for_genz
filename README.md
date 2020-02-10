@@ -21,6 +21,7 @@ This project aims to share the ideologies of the people by sharing and interacti
 6. Feed UI (Frontend).
 7. Partial Profile UI.
 
+* [Screenshot](Screenshot_1581298376.png)
 
 ## Goals
 1. People rate how funny the Meme is -- not the conventional likes (Not implemented yet).
