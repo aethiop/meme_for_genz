@@ -8,10 +8,11 @@ List<String> images = [
 ];
 
 List<String> title = [
-  "Blow Drying",
+  "Whatt???Blow Drying",
   "Marriage",
-  "Google",
-  "Korean",
-  "GOT",
-  "Key and Peele"
+  "What is Google",
+  "World War III",
+  "Avocado be like",
+  "Bluffing Opponent"
 ];
+List<String> tags = ["tag1", "tag2", "tag3", "tag4", "tag5", "tag6"];

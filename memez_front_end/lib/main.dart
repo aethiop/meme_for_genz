@@ -203,7 +203,7 @@ class CardScrollWidget extends StatelessWidget {
             start: start,
             textDirection: TextDirection.rtl,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(16.0),
+              borderRadius: BorderRadius.circular(20.0),
               child: Container(
                 decoration: BoxDecoration(color: Colors.black, boxShadow: [
                   BoxShadow(
@@ -224,14 +224,32 @@ class CardScrollWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 16.0, vertical: 8.0),
-                              child: Text(title[i],
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 25.0,
-                                      fontFamily: "SF-Pro-Text-Regular")),
-                            )
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 16.0, vertical: 8.0),
+                                child: Padding(
+                                    padding: EdgeInsets.only(bottom: 10),
+                                    child: Container(
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: <Widget>[
+                                          Padding(
+                                              padding:
+                                                  EdgeInsets.only(right: 9),
+                                              child: CircleAvatar(
+                                                  radius: 25,
+                                                  backgroundImage: AssetImage(
+                                                      'assets/avatar_profile.png'))),
+                                          Column(children: <Widget>[
+                                            Text(title[i],
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20.0,
+                                                    fontFamily:
+                                                        "SF-Pro-Text-Regular"))
+                                          ])
+                                        ]))))
                           ],
                         ),
                       )
