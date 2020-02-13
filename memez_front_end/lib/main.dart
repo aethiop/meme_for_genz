@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'data.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
@@ -20,6 +21,11 @@ var widgetAspectRatio = cardAspectRatio * 1.2;
 class _MyAppState extends State<MyApp> {
   var currentPage = images.length - 1.0;
   var index = 0;
+  double dragDistance = 0.0;
+  bool didDragStart = false;
+  Offset dragDelta;
+  bool onTap = false;
+
   @override
   Widget build(BuildContext context) {
     PageController controller = PageController(initialPage: images.length - 1);
@@ -140,20 +146,33 @@ class _MyAppState extends State<MyApp> {
                                     ))))
                       ],
                     ))),
-            Stack(
-              children: <Widget>[
-                CardScrollWidget(currentPage),
-                Positioned.fill(
-                    child: PageView.builder(
-                  itemCount: images.length,
-                  controller: controller,
-                  reverse: true,
-                  itemBuilder: (context, index) {
-                    return Container();
-                  },
+            GestureDetector(
+                onLongPressStart: (LongPressStartDetails details) {
+                  showAboutDialog(context: context, applicationName: "Memez");
+                  print("Started drag");
+                  print(details.localPosition.dy ~/ 25);
+                },
+                onLongPressMoveUpdate: (LongPressMoveUpdateDetails details) {
+                  print(details.localPosition.dy ~/ 25);
+                },
+                onLongPressEnd: (LongPressEndDetails details) {
+                  print(details.localPosition.dy ~/ 25);
+                  print("Ended drag");
+                },
+                child: Stack(
+                  children: <Widget>[
+                    CardScrollWidget(currentPage),
+                    Positioned.fill(
+                        child: PageView.builder(
+                      itemCount: images.length,
+                      controller: controller,
+                      reverse: true,
+                      itemBuilder: (context, index) {
+                        return Container();
+                      },
+                    ))
+                  ],
                 ))
-              ],
-            )
           ],
         ),
       ),
@@ -218,7 +237,7 @@ class CardScrollWidget extends StatelessWidget {
                     children: <Widget>[
                       Image.asset(images[i], fit: BoxFit.fitWidth),
                       Align(
-                        alignment: Alignment.bottomLeft,
+                        alignment: Alignment.topLeft,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -227,7 +246,7 @@ class CardScrollWidget extends StatelessWidget {
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 16.0, vertical: 8.0),
                                 child: Padding(
-                                    padding: EdgeInsets.only(bottom: 10),
+                                    padding: EdgeInsets.only(top: 10),
                                     child: Container(
                                         child: Row(
                                             mainAxisAlignment:
