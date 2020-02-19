@@ -18,7 +18,7 @@ class _CreatePageState extends State<CreatePage> {
             children: <Widget>[
               IconButton(
                 icon: Icon(
-                  Icons.menu,
+                  Icons.person,
                   color: Colors.white,
                   size: 30.0,
                 ),

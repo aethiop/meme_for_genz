@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
                 children: <Widget>[
                   IconButton(
                     icon: Icon(
-                      Icons.menu,
+                      Icons.person,
                       color: Colors.white,
                       size: 30.0,
                     ),
@@ -65,41 +65,52 @@ class _HomePageState extends State<HomePage> {
               )),
           Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: DefaultTabController(
-                  length: 2,
-                  child: TabBar(
-                    indicator: BubbleTabIndicator(
-                      indicatorHeight: 34.0,
-                      indicatorColor: Colors.red,
-                      tabBarIndicatorSize: TabBarIndicatorSize.label,
-                    ),
-                    tabs: <Widget>[
-                      Container(
-                          child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 8),
-                              child: Text("Subscribed",
-                                  style: TextStyle(
-                                    fontFamily: "Calibre-Semibold",
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontSize: 22.0,
-                                    letterSpacing: 1.0,
-                                  )))),
-                      Container(
-                          child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 8),
-                              child: Text("For You",
-                                  style: TextStyle(
-                                    fontFamily: "Calibre-Semibold",
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontSize: 22.0,
-                                    letterSpacing: 1.0,
-                                  ))))
-                    ],
-                  ))),
+              child: Hero(
+                  transitionOnUserGestures: true,
+                  tag: 'red',
+                  child: Container(
+                      child: DefaultTabController(
+                          length: 2,
+                          child: TabBar(
+                            indicator: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                    color: Colors.black26,
+                                    offset: Offset(0, 5),
+                                    blurRadius: 4,
+                                    spreadRadius: 0)
+                              ],
+                              color: Colors.red,
+                            ),
+                            tabs: <Widget>[
+                              Container(
+                                  child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 8),
+                                      child: Text("Subscribed",
+                                          style: TextStyle(
+                                            fontFamily: "Calibre-Semibold",
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                            fontSize: 22.0,
+                                            letterSpacing: 1.0,
+                                          )))),
+                              Container(
+                                  child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 8),
+                                      child: Text("For You",
+                                          style: TextStyle(
+                                            fontFamily: "Calibre-Semibold",
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                            fontSize: 22.0,
+                                            letterSpacing: 1.0,
+                                          ))))
+                            ],
+                          ))))),
           GestureDetector(
               onLongPressStart: (LongPressStartDetails details) {
                 showAboutDialog(context: context, applicationName: "Memez");

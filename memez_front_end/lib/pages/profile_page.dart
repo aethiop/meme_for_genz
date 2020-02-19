@@ -44,10 +44,12 @@ class ProfilePage extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              CircleAvatar(
-                                  radius: 50,
-                                  backgroundImage:
-                                      AssetImage('assets/avatar_profile.png')),
+                              Hero(
+                                  tag: 'profile',
+                                  child: CircleAvatar(
+                                      radius: 50,
+                                      backgroundImage: AssetImage(
+                                          'assets/avatar_profile.png'))),
                               Padding(
                                 padding: EdgeInsets.only(left: 20),
                                 child: Column(
@@ -111,12 +113,13 @@ class ProfilePage extends StatelessWidget {
                   ),
                   Column(
                     children: <Widget>[
-                      Text("🤣",
+                      Text("1015",
                           style: TextStyle(
+                            fontWeight: FontWeight.bold,
                             color: Colors.white,
                             fontSize: 28,
                           )),
-                      Text("Hilarious",
+                      Text("XP Points",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,

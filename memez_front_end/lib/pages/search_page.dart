@@ -19,7 +19,7 @@ class _SearchPageState extends State<SearchPage> {
                 children: <Widget>[
                   IconButton(
                     icon: Icon(
-                      Icons.menu,
+                      Icons.person,
                       color: Colors.white,
                       size: 30.0,
                     ),
@@ -39,23 +39,27 @@ class _SearchPageState extends State<SearchPage> {
               )),
           Padding(
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Material(
-                color: Colors.red,
-                elevation: 10,
-                borderRadius: BorderRadius.all(Radius.circular(30)),
-                child: TextField(
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      fontSize: 20),
-                  cursorColor: Colors.white,
-                  decoration: InputDecoration(
-                      hintStyle: TextStyle(color: Colors.white),
-                      hintText: "Enter Search Here..",
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                      border: InputBorder.none),
-                ),
-              ))
+              child: Hero(
+                  transitionOnUserGestures: true,
+                  tag: 'red',
+                  child: Container(
+                      child: Material(
+                    color: Colors.red,
+                    elevation: 10,
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                    child: TextField(
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 20),
+                      cursorColor: Colors.white,
+                      decoration: InputDecoration(
+                          hintStyle: TextStyle(color: Colors.white38),
+                          hintText: "Enter Search Here..",
+                          contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                          border: InputBorder.none),
+                    ),
+                  ))))
         ],
       ),
     );
