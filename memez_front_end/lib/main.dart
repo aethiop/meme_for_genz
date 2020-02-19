@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'pages/search_page.dart';
 import 'pages/home_page.dart';
 import 'pages/notification_page.dart';
@@ -197,44 +198,22 @@ class _MainAppState extends State<MainApp> {
         ),
       ),
       body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        selectedIconTheme: IconThemeData(color: Color(0xFFE52020)),
-        showSelectedLabels: true,
-        unselectedIconTheme: IconThemeData(color: Colors.white),
-        elevation: 0,
-        backgroundColor: Color(0xFF2d3447),
-        onTap: (int i) {
-          setState(() {
-            _currentIndex = i;
-          });
-        },
-        currentIndex: _currentIndex,
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text("Home", style: TextStyle(color: Colors.white))),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.search,
-              ),
-              title: Text("Search", style: TextStyle(color: Colors.white))),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.notifications,
-              ),
-              title: Text(
-                "Notification",
-                style: TextStyle(color: Colors.white),
-              )),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.add),
-              title: Text(
-                "Create",
-                style: TextStyle(color: Colors.white),
-              ))
-        ],
-      ),
+      bottomNavigationBar: CurvedNavigationBar(
+          animationDuration: Duration(milliseconds: 300),
+          height: 54,
+          backgroundColor: Color(0xFF2d3447),
+          color: Colors.white,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          items: <Widget>[
+            Icon(Icons.home, color: Color(0xFF2d3447)),
+            Icon(Icons.search, color: Color(0xFF2d3447)),
+            Icon(Icons.notifications, color: Color(0xFF2d3447)),
+            Icon(Icons.add, color: Color(0xFF2d3447))
+          ]),
       backgroundColor: Color(0xFF2d3447),
     );
   }
