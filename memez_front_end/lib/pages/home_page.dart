@@ -15,6 +15,7 @@ var cardAspectRatio = 9.0 / 14.0;
 var widgetAspectRatio = cardAspectRatio * 1.2;
 
 class _HomePageState extends State<HomePage> {
+  bool like = false;
   var currentPage = images.length - 1.0;
   double dragDistance = 0.0;
   bool didDragStart = false;
@@ -112,17 +113,13 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ))))),
           GestureDetector(
-              onLongPressStart: (LongPressStartDetails details) {
-                showAboutDialog(context: context, applicationName: "Memez");
-                print("Started drag");
-                print(details.localPosition.dy ~/ 25);
-              },
-              onLongPressMoveUpdate: (LongPressMoveUpdateDetails details) {
-                print(details.localPosition.dy ~/ 25);
-              },
-              onLongPressEnd: (LongPressEndDetails details) {
-                print(details.localPosition.dy ~/ 25);
-                print("Ended drag");
+              onDoubleTap: () {
+                if (like) {
+                  like = false;
+                } else {
+                  like = true;
+                }
+                print(like);
               },
               child: Stack(
                 children: <Widget>[
@@ -200,6 +197,57 @@ class CardScrollWidget extends StatelessWidget {
                     fit: StackFit.expand,
                     children: <Widget>[
                       Image.asset(images[i], fit: BoxFit.fitWidth),
+                      Positioned.directional(
+                          textDirection: TextDirection.ltr,
+                          bottom: 10,
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: 10),
+                            child: Row(
+                              children: <Widget>[
+                                Column(
+                                  children: <Widget>[
+                                    IconButton(
+                                        icon: Icon(
+                                          Icons.favorite,
+                                          size: 30.0,
+                                          color: Colors.white,
+                                        ),
+                                        onPressed: null),
+                                    Text(
+                                      "100",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  ],
+                                ),
+                                Column(
+                                  children: <Widget>[
+                                    IconButton(
+                                        icon: Icon(
+                                          Icons.comment,
+                                          size: 30.0,
+                                          color: Colors.white,
+                                        ),
+                                        onPressed: null),
+                                    Text(
+                                      "12",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  ],
+                                ),
+                                IconButton(
+                                    icon: Icon(
+                                      Icons.share,
+                                      size: 30.0,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: null),
+                              ],
+                            ),
+                          )),
                       Align(
                         alignment: Alignment.topLeft,
                         child: Column(
@@ -232,10 +280,10 @@ class CardScrollWidget extends StatelessWidget {
                                                     fontFamily:
                                                         "SF-Pro-Text-Regular"))
                                           ])
-                                        ]))))
+                                        ])))),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
