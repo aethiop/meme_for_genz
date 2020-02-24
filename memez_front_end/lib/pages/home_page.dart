@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/gestures.dart';
 
 import '../data.dart';
-import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'profile_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,8 +14,9 @@ var cardAspectRatio = 9.0 / 14.0;
 var widgetAspectRatio = cardAspectRatio * 1.2;
 
 class _HomePageState extends State<HomePage> {
-  bool like = false;
+  var doubleTapped = false;
   var currentPage = images.length - 1.0;
+
   double dragDistance = 0.0;
   bool didDragStart = false;
   Offset dragDelta;
@@ -112,41 +112,50 @@ class _HomePageState extends State<HomePage> {
                                           ))))
                             ],
                           ))))),
-          GestureDetector(
-              onDoubleTap: () {
-                if (like) {
-                  like = false;
-                } else {
-                  like = true;
-                }
-                print(like);
-              },
-              child: Stack(
-                children: <Widget>[
-                  CardScrollWidget(currentPage),
-                  Positioned.fill(
-                      child: PageView.builder(
-                    itemCount: images.length,
-                    controller: controller,
-                    reverse: true,
-                    itemBuilder: (context, index) {
-                      return Container();
-                    },
-                  ))
-                ],
+          Stack(
+            children: <Widget>[
+              CardScrollWidget(currentPage),
+              Positioned.fill(
+                  child: PageView.builder(
+                itemCount: images.length,
+                controller: controller,
+                reverse: true,
+                itemBuilder: (context, index) {
+                  return Container();
+                },
               ))
+            ],
+          )
         ],
       ),
     );
   }
 }
 
-class CardScrollWidget extends StatelessWidget {
+class CardScrollWidget extends StatefulWidget {
   final currentPage;
+  const CardScrollWidget(this.currentPage);
+  @override
+  _CardScrollWidgetState createState() => _CardScrollWidgetState();
+}
+
+class _CardScrollWidgetState extends State<CardScrollWidget> {
+  bool _isLiked = false;
+  int _likeCount = 0;
   final padding = 20.0;
   final verticalInset = 20.0;
 
-  CardScrollWidget(this.currentPage);
+  void _toggleLike() {
+    setState(() {
+      if (_isLiked) {
+        _likeCount -= 1;
+        _isLiked = false;
+      } else {
+        _likeCount += 1;
+        _isLiked = true;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +177,7 @@ class CardScrollWidget extends StatelessWidget {
         List<Widget> cardList = new List();
 
         for (var i = 0; i < images.length; i++) {
-          var delta = i - currentPage;
+          var delta = i - widget.currentPage;
           bool isOnRight = delta > 0;
 
           var start = padding +
@@ -183,112 +192,113 @@ class CardScrollWidget extends StatelessWidget {
             start: start,
             textDirection: TextDirection.rtl,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
-              child: Container(
-                decoration: BoxDecoration(color: Colors.black, boxShadow: [
-                  BoxShadow(
-                      color: Colors.black38,
-                      offset: Offset(3.0, 6.0),
-                      blurRadius: 10.0)
-                ]),
-                child: AspectRatio(
-                  aspectRatio: cardAspectRatio,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: <Widget>[
-                      Image.asset(images[i], fit: BoxFit.fitWidth),
-                      Positioned.directional(
-                          textDirection: TextDirection.ltr,
-                          bottom: 10,
-                          child: Padding(
-                            padding: EdgeInsets.only(bottom: 10),
-                            child: Row(
+                borderRadius: BorderRadius.circular(20.0),
+                child: Container(
+                  decoration: BoxDecoration(color: Colors.black, boxShadow: [
+                    BoxShadow(
+                        color: Colors.black38,
+                        offset: Offset(3.0, 6.0),
+                        blurRadius: 10.0)
+                  ]),
+                  child: AspectRatio(
+                    aspectRatio: cardAspectRatio,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: <Widget>[
+                        Image.asset(images[i], fit: BoxFit.fitWidth),
+                        Positioned.directional(
+                            textDirection: TextDirection.ltr,
+                            bottom: 10,
+                            child: Padding(
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: Row(
+                                children: <Widget>[
+                                  Column(
+                                    children: <Widget>[
+                                      IconButton(
+                                          icon: Icon(
+                                            Icons.favorite,
+                                            size: 30.0,
+                                            color: (_isLiked
+                                                ? Colors.red
+                                                : Colors.white),
+                                          ),
+                                          onPressed: _toggleLike),
+                                      Text(
+                                        userAttr[i][0].toString(),
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  ),
+                                  Column(
+                                    children: <Widget>[
+                                      IconButton(
+                                          icon: Icon(
+                                            Icons.comment,
+                                            size: 30.0,
+                                            color: Colors.white,
+                                          ),
+                                          onPressed: null),
+                                      Text(
+                                        userAttr[i][1],
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  ),
+                                  IconButton(
+                                      icon: Icon(
+                                        Icons.share,
+                                        size: 30.0,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: null),
+                                ],
+                              ),
+                            )),
+                        Align(
+                            alignment: Alignment.topLeft,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Column(
-                                  children: <Widget>[
-                                    IconButton(
-                                        icon: Icon(
-                                          Icons.favorite,
-                                          size: 30.0,
-                                          color: Colors.white,
-                                        ),
-                                        onPressed: null),
-                                    Text(
-                                      "100",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ],
-                                ),
-                                Column(
-                                  children: <Widget>[
-                                    IconButton(
-                                        icon: Icon(
-                                          Icons.comment,
-                                          size: 30.0,
-                                          color: Colors.white,
-                                        ),
-                                        onPressed: null),
-                                    Text(
-                                      "12",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ],
-                                ),
-                                IconButton(
-                                    icon: Icon(
-                                      Icons.share,
-                                      size: 30.0,
-                                      color: Colors.white,
-                                    ),
-                                    onPressed: null),
+                                Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 16.0, vertical: 8.0),
+                                    child: Padding(
+                                        padding: EdgeInsets.only(top: 10),
+                                        child: Container(
+                                            child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: <Widget>[
+                                              Padding(
+                                                  padding:
+                                                      EdgeInsets.only(right: 9),
+                                                  child: CircleAvatar(
+                                                      radius: 25,
+                                                      backgroundImage: AssetImage(
+                                                          'assets/avatar_profile.png'))),
+                                              Column(children: <Widget>[
+                                                Text(title[i],
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 20.0,
+                                                        fontFamily:
+                                                            "SF-Pro-Text-Regular"))
+                                              ])
+                                            ])))),
                               ],
-                            ),
-                          )),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 16.0, vertical: 8.0),
-                                child: Padding(
-                                    padding: EdgeInsets.only(top: 10),
-                                    child: Container(
-                                        child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: <Widget>[
-                                          Padding(
-                                              padding:
-                                                  EdgeInsets.only(right: 9),
-                                              child: CircleAvatar(
-                                                  radius: 25,
-                                                  backgroundImage: AssetImage(
-                                                      'assets/avatar_profile.png'))),
-                                          Column(children: <Widget>[
-                                            Text(title[i],
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20.0,
-                                                    fontFamily:
-                                                        "SF-Pro-Text-Regular"))
-                                          ])
-                                        ])))),
-                          ],
-                        ),
-                      ),
-                    ],
+                            )),
+                      ],
+                    ),
                   ),
-                ),
-              ),
-            ),
+                )),
           );
           cardList.add(cardItem);
         }
